@@ -1,5 +1,7 @@
 # FXGl example game as described on Oracle Java Magazine
 
+**note:** This repo was forked as part of an internal education projekt at nexiles GmbH.  As part of that project, a task was to rename packages. The original package name is still visible in the `main` branch.  All credits to the original code go to the original author(s).
+
 A JavaFX/FXGL example game.
 
 ## About the project
@@ -26,3 +28,4 @@ Article: ["Look out, Duke! Part 2: Control a Java game with a Raspberry Pi"](htt
 ## Credits
 
 * Cloud computer icon from [flaticon.com](https://www.flaticon.com) > [srip](https://www.flaticon.com/authors/srip)
+* connection icon from [iconmonstr](https://iconmonstr.com/connection-4-png/)

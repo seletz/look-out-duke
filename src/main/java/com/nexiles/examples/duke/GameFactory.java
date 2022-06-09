@@ -1,10 +1,11 @@
-package be.webtechie.fxgl;
+package com.nexiles.examples.duke;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 import static com.almasb.fxgl.dsl.FXGL.texture;
 
-import be.webtechie.fxgl.component.CloudComponent;
-import be.webtechie.fxgl.component.PlayerComponent;
+import com.nexiles.examples.duke.component.CloudComponent;
+import com.nexiles.examples.duke.component.NexilesComponent;
+import com.nexiles.examples.duke.component.PlayerComponent;
 import com.almasb.fxgl.dsl.components.AutoRotationComponent;
 import com.almasb.fxgl.dsl.components.OffscreenCleanComponent;
 import com.almasb.fxgl.dsl.components.ProjectileComponent;
@@ -26,7 +27,7 @@ public class GameFactory implements EntityFactory {
      * Types of objects we are going to use in our game.
      */
     public enum EntityType {
-        BACKGROUND, CENTER, DUKE, CLOUD, BULLET
+        BACKGROUND, CENTER, DUKE, CLOUD, BULLET, NEXILES
     }
 
     @Spawns("background")
@@ -79,6 +80,17 @@ public class GameFactory implements EntityFactory {
                 .viewWithBBox(texture("sprite_bullet.png", 22, 11))
                 .collidable()
                 .with(new ProjectileComponent(data.get("direction"), 350), new OffscreenCleanComponent())
+                .build();
+    }
+
+    @Spawns("nexiles")
+    public Entity newNexiles(SpawnData data) {
+        return entityBuilder(data)
+                .type(EntityType.NEXILES)
+                .viewWithBBox(texture("iconmonstr-connection-4-64.png", 64, 64))
+                .with((new AutoRotationComponent()).withSmoothing())
+                .with(new NexilesComponent())
+                .collidable()
                 .build();
     }
 }

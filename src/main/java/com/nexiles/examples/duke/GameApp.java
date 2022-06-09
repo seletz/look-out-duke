@@ -1,10 +1,10 @@
-package be.webtechie.fxgl;
+package com.nexiles.examples.duke;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameScene;
 
-import be.webtechie.fxgl.GameFactory.EntityType;
-import be.webtechie.fxgl.component.PlayerComponent;
+import com.nexiles.examples.duke.GameFactory.EntityType;
+import com.nexiles.examples.duke.component.PlayerComponent;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
@@ -56,7 +56,7 @@ public class GameApp extends GameApplication {
         settings.setWidth(screenWidth);
         settings.setFullScreenAllowed(true);
         settings.setFullScreenFromStart(true);
-        settings.setTitle("Oracle Java Magazine - FXGL");
+        settings.setTitle("Look out, Duke!");
     }
 
     /**
@@ -91,7 +91,7 @@ public class GameApp extends GameApplication {
         spawn("background", new SpawnData(0, 0).put("width", getAppWidth())
                 .put("height", getAppHeight()));
         int circleRadius = 80;
-        spawn("center", new SpawnData((getAppWidth() / 2) - (circleRadius / 2), (getAppHeight() / 2) - (circleRadius / 2))
+        spawn("center", new SpawnData((getAppWidth() / 2.0) - (circleRadius / 2.0), (getAppHeight() / 2.0) - (circleRadius / 2.0))
                 .put("x", (circleRadius / 2))
                 .put("y", (circleRadius / 2))
                 .put("radius", circleRadius));
@@ -107,8 +107,14 @@ public class GameApp extends GameApplication {
     protected void initPhysics() {
         onCollisionBegin(EntityType.DUKE, EntityType.CENTER, (duke, center) -> this.player.getComponent(PlayerComponent.class).die());
         onCollisionBegin(EntityType.DUKE, EntityType.CLOUD, (enemy, cloud) -> this.player.getComponent(PlayerComponent.class).die());
+        onCollisionBegin(EntityType.DUKE, EntityType.NEXILES, (enemy, cloud) -> this.player.getComponent(PlayerComponent.class).die());
         onCollisionBegin(EntityType.BULLET, EntityType.CLOUD, (bullet, cloud) -> {
             inc("score", 1);
+            bullet.removeFromWorld();
+            cloud.removeFromWorld();
+        });
+        onCollisionBegin(EntityType.BULLET, EntityType.NEXILES, (bullet, cloud) -> {
+            inc("score", 3);
             bullet.removeFromWorld();
             cloud.removeFromWorld();
         });
@@ -148,7 +154,10 @@ public class GameApp extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         if (getGameWorld().getEntitiesByType(EntityType.CLOUD).size() < 10) {
-            spawn("cloud", getAppWidth() / 2, getAppHeight() / 2);
+            spawn("cloud", getAppWidth() / 2.0, getAppHeight() / 2.0);
+        }
+        if (getGameWorld().getEntitiesByType(EntityType.NEXILES).size() < 5) {
+            spawn("nexiles", getAppWidth() / 2.0, getAppHeight() / 2.0);
         }
     }
 }

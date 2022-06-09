@@ -1,4 +1,4 @@
-package be.webtechie.fxgl.component;
+package com.nexiles.examples.duke.component;
 
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.entity.component.Component;
